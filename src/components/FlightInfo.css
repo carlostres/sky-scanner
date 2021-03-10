@@ -1,0 +1,41 @@
+
+.location-field {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.date-field input{
+    margin-right: 2em ;
+}
+
+/* Display items horizontally */
+.form-inline {
+    display: inline-block;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+
+  /* Gives labels breathing room from main form field*/
+  .form-inline label {
+    margin: 5px 10px 5px 0;
+  }
+  
+  /* Style the input fields */
+  .form-inline input {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  button {
+      display: inline-block;
+      margin: 0px;
+      background-color: #0BB5FF;
+      border: none;
+      padding: 10px 5px;
+      color: white
+  }
+  
