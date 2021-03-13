@@ -1,8 +1,32 @@
+.boxed-letters{
+  margin-left: 2em;
+  margin-bottom: 0px;
+  display: block;
+}
+.total {
+margin-bottom: 10px;
+border-bottom: 1px solid #C7BAA7;
+}
+.CandC {
+  display: inline-block;
+  float: right;
+  margin: 20px 15px 0px 0px;
+}
 h1 {
   text-align: center;
-  background-color: #003366;
-  color: #ffcb05;
+  color: black;
+  display: inline-block;
+  background-color: #FF9000;
+  padding: 0px 4px 0px 4px;
+  margin-bottom: 3px;
+  width: 30px;
+  color: white;
+}
+p {
+  font-size: 14px;
+  margin: 3px 0px 10px 2.1em;
+  font-style: ;
+  /* margin-left: 2em;
   margin-top: 0px;
-  padding: 0.5em;
-  font-size: 2em;
+  margin-bottom: 5px; */
 }
