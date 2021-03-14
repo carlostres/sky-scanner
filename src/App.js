@@ -11,11 +11,19 @@ function App()  {
     function placeInformation(query) {
         setResult(query);
     }
+    const [currency, setCurrency] = useState('')
+    function updateCurrency(selection){
+        setCurrency(selection)
+    }
+    const [country,  setCountry] = useState('')
+    function updateCountry(selection){
+        setCountry(selection)
+    }
     return (
         <div>
-        <Header />
+        <Header updateCurrency={updateCurrency} updateCountry={updateCountry} />
         <img src={logo} ></img>
-        <FlightInfo updateInfo={placeInformation}/>
+        <FlightInfo updateInfo={placeInformation} currency={currency} country={country}/>
         {Result !== '' ? <BuildFlightTable info={Result}/> : <> </> }
         </div>
     );

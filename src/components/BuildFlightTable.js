@@ -1,9 +1,25 @@
 import React, {useState} from 'react';
 
 function BuildFlightTable(props) {
-  function whatShow(props){
-    
+  // console.log(props.info)
+  function updateProps(props) { // updates props in order to use map function directly with .Quotes section of props
+    const Quotes = props.info.Quotes 
+    const Carriers = props.info.Carriers
+    let carrierName = ''
+    for (var quote in Quotes){ // iterates through quotes if theres more than one
+      let carrierNum = Quotes[quote].OutboundLeg.CarrierIds[0] //gets carrier id #
+      for (var carrier in Carriers) {
+        if (Carriers[carrier].CarrierId === carrierNum) { //matches carrier id to name of carrier and updates Quotes
+          carrierName = Carriers[carrier].Name
+          props.info.Quotes[quote].OutboundLeg.CarrierIds[0] = carrierName
+          break
+        }
+      }
+    }
   }
+  updateProps(props)
+  console.log(props.info)
+
   return (
     <div className='tableOfFlights'>
       <table>
@@ -15,20 +31,14 @@ function BuildFlightTable(props) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-          <td> {props.info.Carriers[0].Name} </td>
-          <td> { '$' + props.info.Quotes[0].MinPrice}</td>
-          <td>{props.info.Quotes[0].Direct.toString() === 'true' ? "Yes" : "No"}</td>
-          </tr>
-          {/* {props.map(entry => {
-            return(<tr>
-              <th>{entry.Carriers[0].Name}</th>
-              <th>{entry.Quotes[0].MinPrice}</th>
-              <th>{entry.Quotes[0].Direct}</th>
-            </tr>)
-          })} */}
-        </tbody>
-      {/* h2> {props.info.Carriers[0].Name} </h2> */}
+        {props.info.Quotes.map(entry => {
+                return (<tr key={entry.QuoteId}>
+                    <td>{entry.OutboundLeg.CarrierIds}</td>
+                    <td>{entry.MinPrice}</td>
+                    <td>{(entry.Direct.toString() === 'true') ? 'Yes': 'No'}</td>
+                </tr>)
+            })}
+          </tbody>
       </table>
     </div>
   );

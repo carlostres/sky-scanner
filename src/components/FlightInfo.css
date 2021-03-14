@@ -6,8 +6,9 @@
     width: 50%;
 }
 
-.date-field input{
-    margin-right: 2em ;
+.date-field {
+  margin-left: 1.1em;
+  margin-right: auto;
 }
 
 /* Display items horizontally */
