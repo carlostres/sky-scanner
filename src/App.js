@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
 import Header from './components/Header';
 import logo from './Flight.png';
 import FlightInfo from './components/FlightInfo';
@@ -11,19 +10,15 @@ function App()  {
     function placeInformation(query) {
         setResult(query);
     }
-    const [currency, setCurrency] = useState('')
+    const [currency, setCurrency] = useState('USD')
     function updateCurrency(selection){
         setCurrency(selection)
     }
-    const [country,  setCountry] = useState('')
-    function updateCountry(selection){
-        setCountry(selection)
-    }
     return (
         <div>
-        <Header updateCurrency={updateCurrency} updateCountry={updateCountry} />
-        <img src={logo} ></img>
-        <FlightInfo updateInfo={placeInformation} currency={currency} country={country}/>
+        <Header updateCurrency={updateCurrency}/>
+        <img src={logo} alt="plane taking off" ></img>
+        <FlightInfo updateInfo={placeInformation} currency={currency}/>
         {Result !== '' ? <BuildFlightTable info={Result}/> : <> </> }
         </div>
     );

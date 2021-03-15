@@ -9,40 +9,26 @@ function Header(props) {
                 }
             }
     const [currency, setCurrency] = useState([])
-    const [countries, setCountries] = useState([])
 
     async function fetchCurrencies(){
         let currencies = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies", request)
         currencies = await currencies.json();
          setCurrency(currencies.Currencies)
         }
-    async function fetchCountries(){
-        let countries = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US", request)
-        countries = await countries.json();
-        setCountries(countries.Countries)
-    }
+        
     useEffect(() => {fetchCurrencies()}, [])
-    useEffect(() => {fetchCountries()}, [])
 
     return(
         <div className='total'>
             <div className='boxed-letters'>
                 <h1>F</h1> <h1>L</h1> <h1>I</h1> <h1>G</h1> <h1>H</h1> <h1>T</h1> 
-                <form className='CandC'>
-                    <label htmlFor="currency"> Choose a currency: </label>
+                <form className='Currency'>
                     <select onChange={ e => props.updateCurrency(e.target.value)}>
+                        <option selected disabled hidden> Select currency: </option>
                         {currency.map(entry => {
                             return( <option value={entry.Code}> {entry.Code} </option>)
                         })}
                     </select>
-                    <div className="currentCountry">
-                        <label htmlFor="country"> Choose current country: </label>
-                        <select onChange={ e => props.updateCountry(e.target.value)}>
-                            {countries.map( entry => {
-                                return( <option value={entry.Code}> {entry.Code} </option>)
-                            })}
-                        </select>
-                    </div>
                 </form>
             </div>
             <p>
