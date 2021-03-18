@@ -15,15 +15,15 @@ function Header(props) {
         currencies = await currencies.json();
          setCurrency(currencies.Currencies)
         }
-        
-    useEffect(() => {fetchCurrencies()}, [])
 
+    useEffect(() => {fetchCurrencies()}, [])
+    
     return(
         <div className='total'>
             <div className='boxed-letters'>
                 <h1>F</h1> <h1>L</h1> <h1>I</h1> <h1>G</h1> <h1>H</h1> <h1>T</h1> 
                 <form className='Currency'>
-                    <select onChange={ e => props.updateCurrency(e.target.value)}>
+                    <select onChange={ e => props.updateCurrency(e.target.value)} >
                         <option selected disabled hidden> Select currency: </option>
                         {currency.map(entry => {
                             return( <option value={entry.Code}> {entry.Code} </option>)

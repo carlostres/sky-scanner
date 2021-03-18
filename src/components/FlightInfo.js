@@ -3,7 +3,7 @@ import './FlightInfo.css';
 
 function FlightInfo(props) {
     const [search, setSearch] = useState({ startingPoint: '', destinationPoint: '' });
-    const [dates, setDates] = useState({ DoD: 'anytime', DoR: 'anytime' });
+    const [dates, setDates] = useState({ DoD: 'anytime', DoR: 'anytime' }); //Date of Departure, Date of Return
     const [airports, setAirports] = useState([]);
     const [showAirports, setShowAirports] = useState(false);
 
@@ -18,8 +18,8 @@ function FlightInfo(props) {
     function handleSubmit(e) {
         e.preventDefault();
         async function retrieveInfo() {
-            let response = await fetch('https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/' + props.currency + '/en-US/'
-                + search.startingPoint + '/' + search.destinationPoint + '/' + dates.DoD + '?inboundpartialdate=' + dates.DoR, request);
+            let response =  await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/${props.currency}/en-US/${search.startingPoint}/` +
+            `${search.destinationPoint}/${dates.DoD}?inboundpartialdate=${dates.DoR}`, request)
             response = await response.json();
             props.updateInfo(response) //passes response of flight data to App function to be used in BuildFlightTable as table entries
         }
@@ -27,11 +27,11 @@ function FlightInfo(props) {
             retrieveInfo(); // built in check to only look up flight data if required fields are not blank
         }
         setSearch({ startingPoint: '', destinationPoint: '' })
-        setDates({ DoD: '', DoR: '' }) // clear form inputs after submit
+        setDates({ DoD: 'anytime', DoR: 'anytime' }) // clear form inputs after submit
     }
     function handleChange(e) {
         const val = e.target.value
-        if (e.target.type !== 'date') { //receives changes for both 
+        if (e.target.type !== 'date') { //receives changes for both location and date params, updates accordingly
             setSearch({
                 ...search,
                 [e.target.name]: val
@@ -42,18 +42,19 @@ function FlightInfo(props) {
             );
         }
     }
-    function createTable() {
+    function createTable() { // searches API for airport codes matching the desired city name.
         let query = prompt("Enter name of desired location")
         async function getPlaces() {
-            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({ query: query }), request)
+            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({query: query}), request)
             response = await response.json()
             setAirports(response.Places)
             setShowAirports(true)
         }
-        getPlaces()
+        if (query !== null) {
+            getPlaces()
+        }
     }
-    function fillIn(Id) {
-        console.log(Id)
+    function fillIn(Id) { // fills in missing location params needed for API request. Makes table with airport locations go away.
         if ((search.startingPoint === '' && search.destinationPoint === '') || (search.startingPoint === '')) {
             setSearch({ ...search, ['startingPoint']: Id})
         } else if (search.destinationPoint === '') {
@@ -66,7 +67,8 @@ function FlightInfo(props) {
         <div className='location-field'>
             <p>
                 Instructions: If you know the airport code for where you want to depart from and arrive to, input them below.
-                If not, click <a onClick={createTable}> here </a> to view airport locations
+                If not, type city names <a onClick={createTable}> here </a> to view airport locations <br></br>and select the desired one.
+                Do this process for both location fields, if necessary. Note: if dates are left blank they default to "anytime." Default currency is set to USD.
             </p>
             <form className='form-inline' onSubmit={handleSubmit}>
                 <label htmlFor='startingPoint' value={search.startingPoint}> Leaving from: </label>
@@ -81,10 +83,11 @@ function FlightInfo(props) {
                     <button type='submit'> View Rates!</button>
                 </div>
             </form>
-            {showAirports ? airports.map( entry => { return ( <tr id={entry.PlaceId} onClick={() => fillIn(entry.PlaceId)}>
-                <td>{entry.PlaceName}</td>
+            {showAirports ? airports.map( entry => { return (<tr id={entry.PlaceId} onClick={() => fillIn(entry.PlaceId)}>
+                {entry.PlaceId === airports[0].PlaceId ? <thead> <th> Choose airport: </th> </thead> : <></>} 
+                <td>{entry.PlaceName}</td> 
             </tr>
-            )}) : <> </>}
+            )}) : <></>}
         </div>
     );
 }

@@ -13,12 +13,12 @@ border-bottom: 1px solid #C7BAA7;
   position: relative;
 }
 select {
-  padding: 5px;
+  padding: 8px;
   background-color: #FF9000;
   border: 0px;
   color: white;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 15px;
 }
 select:hover {
   cursor: pointer;
@@ -36,7 +36,4 @@ h1 {
 p {
   font-size: 14px;
   margin: 3px 0px 10px 2.2em;
-  /* margin-left: 2em;
-  margin-top: 0px;
-  margin-bottom: 5px; */
 }
