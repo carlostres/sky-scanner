@@ -15,9 +15,11 @@ function BuildFlightTable(props) {
       }
     }
   }
-  updateProps(props)
-  console.log(props.info)
+  let symbolLeft = props.info.Currencies[0].SymbolOnLeft
+  let symbol = props.info.Currencies[0].Symbol
 
+  updateProps(props)
+ 
   if (props.info.Quotes !== undefined && props.info.Quotes.length !== 0){  // if there are results for the query, display them
     return (
       <div className='tableOfFlights'>
@@ -33,7 +35,7 @@ function BuildFlightTable(props) {
           {props.info.Quotes.map(entry => {
                   return (<tr key={entry.QuoteId}>
                       <td>{entry.OutboundLeg.CarrierIds}</td>
-                      <td> {props.info.Currencies[0].Symbol}{entry.MinPrice}</td>
+                      <td> {symbolLeft ? symbol + ' ' + entry.MinPrice : entry.MinPrice + ' ' + symbol} </td>
                       <td>{(entry.Direct.toString() === 'true') ? 'Yes': 'No'}</td>
                   </tr>)
               })}
