@@ -18,8 +18,8 @@ function FlightInfo(props) {
     function handleSubmit(e) {
         e.preventDefault();
         async function retrieveInfo() {
-            let response =  await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/${props.currency}/en-US/${search.startingPoint}/` +
-            `${search.destinationPoint}/${dates.DoD}?inboundpartialdate=${dates.DoR}`, request)
+            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/${props.currency}/en-US/${search.startingPoint}/` +
+                `${search.destinationPoint}/${dates.DoD}?inboundpartialdate=${dates.DoR}`, request)
             response = await response.json();
             props.updateInfo(response) //passes response of flight data to App function to be used in BuildFlightTable as table entries
         }
@@ -45,7 +45,7 @@ function FlightInfo(props) {
     function createTable() { // searches API for airport codes matching the desired city name.
         let query = prompt("Enter name of desired location")
         async function getPlaces() {
-            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({query: query}), request)
+            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({ query: query }), request)
             response = await response.json()
             setAirports(response.Places)
             setShowAirports(true)
@@ -56,9 +56,9 @@ function FlightInfo(props) {
     }
     function fillIn(Id) { // fills in missing location params needed for API request. Makes table with airport locations go away.
         if ((search.startingPoint === '' && search.destinationPoint === '') || (search.startingPoint === '')) {
-            setSearch({ ...search, ['startingPoint']: Id})
+            setSearch({ ...search, ['startingPoint']: Id })
         } else if (search.destinationPoint === '') {
-            setSearch({...search, ['destinationPoint']: Id})
+            setSearch({ ...search, ['destinationPoint']: Id })
         }
         setShowAirports(false)
     }
@@ -71,23 +71,31 @@ function FlightInfo(props) {
                 Do this process for both location fields, if necessary. Note: if dates are left blank they default to "anytime." Default currency is set to USD.
             </p>
             <form className='form-inline' onSubmit={handleSubmit}>
-                <label htmlFor='startingPoint' value={search.startingPoint}> Leaving from: </label>
-                <input type='text' onChange={handleChange} name='startingPoint' value={search.startingPoint}></input>
-                <label htmlFor='destinationPoint'> Going to: </label>
-                <input type='text' onChange={handleChange} name='destinationPoint' value={search.destinationPoint}></input>
-                <div className='date-field'>
+                <div className='input'>
+                    <label htmlFor='startingPoint' value={search.startingPoint}> Leaving from: </label>
+                    <input type='text' onChange={handleChange} name='startingPoint' value={search.startingPoint}></input>
+                </div>
+                <div className='input'>
+                    <label htmlFor='destinationPoint'> Going to: </label>
+                    <input type='text' onChange={handleChange} name='destinationPoint' value={search.destinationPoint}></input>
+                </div>
+                <div className='input'>
                     <label htmlFor='departureDate'>Departing: </label>
                     <input type='date' name='DoD' onChange={handleChange} value={dates.DoD}></input>
+                </div>
+                <div className='input'>
                     <label htmlFor='returnDate'>Returning: </label>
                     <input type='date' name='DoR' onChange={handleChange} value={dates.DoR} ></input>
-                    <button type='submit'> View Rates!</button>
                 </div>
+                <button type='submit'> View Rates!</button>
             </form>
-            {showAirports ? airports.map( entry => { return (<tr id={entry.PlaceId} onClick={() => fillIn(entry.PlaceId)}>
-                {entry.PlaceId === airports[0].PlaceId ? <thead> <th> Choose airport: </th> </thead> : <></>} 
-                <td>{entry.PlaceName}</td> 
-            </tr>
-            )}) : <></>}
+            {showAirports ? airports.map(entry => {
+                return (<tr id={entry.PlaceId} onClick={() => fillIn(entry.PlaceId)}>
+                    {entry.PlaceId === airports[0].PlaceId ? <thead> <th> Choose airport: </th> </thead> : <></>}
+                    <td>{entry.PlaceName}</td>
+                </tr>
+                )
+            }) : <></>}
         </div>
     );
 }
