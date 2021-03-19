@@ -24,9 +24,7 @@ function Header(props) {
         <div className='total'>
             <div className='slogan'>
                 <img src={Logo} className='logo' />
-                <p>
                 <strong>Find your next adventure</strong>
-            </p>
             </div>
             <form className='Currency'>
                 <select onChange={e => props.updateCurrency(e.target.value)} >

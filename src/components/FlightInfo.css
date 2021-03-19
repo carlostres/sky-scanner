@@ -1,8 +1,4 @@
 
-.location-field {
-
-}
-
 .date-field {
   display: inline-block;
   margin-left: auto;
@@ -14,7 +10,7 @@ a {
 a:hover {
   cursor: pointer;
 }
-/* Display items horizontally */
+
 .form-inline {
   display: flex;
   flex-direction: row;
@@ -40,6 +36,7 @@ a:hover {
       border: none;
       font-weight: bold;
       color: white;
+      margin: 5px 10px 5px 0;
   }
   tr {
     display: table;

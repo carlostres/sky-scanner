@@ -1,7 +1,5 @@
 table { /* Make a BuildFlightTable css file to style independently */
     margin-top: 2em;
-    margin-left: 27em;
-    margin-right: auto;
     border-collapse: collapse;
   }
   tr:nth-child(even) {

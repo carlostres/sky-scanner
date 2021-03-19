@@ -67,7 +67,7 @@ function FlightInfo(props) {
         <div className='location-field'>
             <p>
                 Instructions: If you know the airport code for where you want to depart from and arrive to, input them below.
-                If not, type city names <a onClick={createTable}> here </a> to view airport locations <br></br>and select the desired one.
+                If not, type city names <a onClick={createTable}> here </a> to view airport locations and <br></br> select the desired one. 
                 Do this process for both location fields, if necessary. Note: if dates are left blank they default to "anytime." Default currency is set to USD.
             </p>
             <form className='form-inline' onSubmit={handleSubmit}>
